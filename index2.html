@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            background-color: #240abc;
+            height: 100px;
+            width: 100px;
+        }
+
+        .two {
+            background-color: #1ccdec;
+        }
+
+        .three {
+            background-color: #8a32da;
+        }
+
+        [v-cloak] {
+            display: none !important;
+        }
+
+        input {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+        <custom-form />
+        <br>
+        <input @keyup.enter="greet(greeting + '23') " v-model="greeting" />
+        <hr>
+        <button @click="toggleBox">show box</button>
+        <custom-box v-if="isVisible" />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function () {
+                return {
+                    greeting: 'Hello world!',
+                    isVisible: false,
+                }
+            },
+            methods: {
+                toggleBox() {
+                    this.isVisible = !this.isVisible
+                },
+                greet(greeting) {
+                    console.log(greeting);
+                }
+            },
+
+            updated() {
+                console.log('isVisible is update to ' + this.isVisible)
+            }
+        })
+
+
+        app.component('custom-box', {
+            template: `
+               <div class="box"></box>
+            `,
+
+            created() {
+                console.log('created');
+            },
+
+            mounted() {
+                console.log('mounted');
+            },
+
+            unmounted() {
+                console.log('unmounted');
+            },
+
+
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
